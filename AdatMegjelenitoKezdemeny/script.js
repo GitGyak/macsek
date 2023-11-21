@@ -38,6 +38,8 @@ function ujFelvetele(){
         $('.container').appendChild(sor)
 }
 
+
+
 function felecMegjelnit(){
     sor = document.createElement('div')
     sor.className="row"
@@ -89,10 +91,7 @@ function adatMegjelenites(){
 
 function szerkeszt(id){
     allat=adatok.find(
-        (sor)=>{return sor.id==id}
-    )
-
-    
+        (sor)=>{return sor.id==id})    
     // allat.nev=document.getElementsByClassName(`${allat.id}nev`)[0].value    
     // allat.faj=document.getElementsByClassName(`${allat.id}faj`)[0].value
     // allat.ar=document.getElementsByClassName(`${allat.id}ar`)[0].value
@@ -106,6 +105,18 @@ function szerkeszt(id){
     console.log(adatok)
     rendel()
 }
+
+function hozzaad(){
+    let allat={}
+    for(let mezo of oszlopok){
+        allat[mezo]=document.getElementsByClassName(`uj${mezo}`)[0].value
+        document.getElementsByClassName(`uj${mezo}`)[0].value="" 
+    }
+    allat.id=Number(adatok[adatok.length-1].id)+1
+    adatok.push(allat)
+    rendel()
+}
+
 
 function torol(allat){
     console.log("Törlendő: ", allat)
