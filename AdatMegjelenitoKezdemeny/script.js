@@ -1,6 +1,6 @@
 console.log("helló")
 // CRUD 
-const adatok =[
+var adatok =[
     {id:1,nev:"Micike", faj:"macska", ar:"1000", szin:"cirmos"},
     {id:2,nev:"Lune", faj:"macska", ar:"500", szin:"cirmos"},
     {id:3,nev:"Macsa", faj:"macska", ar:"2000", szin:"cirmos"}
@@ -12,31 +12,108 @@ function $(mit){
     if (vissza.length==1) return vissza[0]
     return vissza
 }
-function rendel(){
-    adatok.forEach(
 
+function rendel(){
+    $('.container').innerHTML=""
+    felecMegjelnit()
+    ujFelvetele()
+    adatMegjelenites() 
+}
+
+function ujFelvetele(){
+    sor=document.createElement('div')
+    sor.className="row"
+    sor.classList.add("my-2")
+    oszlopok.forEach(
+        function(mezoNev){
+            oszlop=document.createElement('div')
+            oszlop.className="col"
+            oszlop.innerHTML=`<input class="uj${mezoNev}" type="text"  class="form-control">`
+            sor.appendChild(oszlop)  
+        })
+        oszlop=document.createElement('div')
+        oszlop.className="col"       
+        oszlop.innerHTML=`<button type="button" onclick="hozzaad()" class="btn btn-primary">Hozzáadás</button>`
+        sor.appendChild(oszlop)
+        $('.container').appendChild(sor)
+}
+
+function felecMegjelnit(){
+    sor = document.createElement('div')
+    sor.className="row"
+    sor.classList.add("my-2")
+    sor.classList.add("fw-bold")
+
+    for(let mezo of oszlopok){
+        // console.log(mezo)
+        fejlec= document.createElement('div')
+        fejlec.className="col"
+        fejlec.innerHTML=mezo
+        sor.appendChild(fejlec)
+    }
+
+    fejlec= document.createElement('div')
+    fejlec.className="col"
+    fejlec.innerHTML="Műveletek"
+    sor.appendChild(fejlec)
+    $('.container').appendChild(sor)
+}
+
+
+function adatMegjelenites(){
+    adatok.forEach(
         function(allat){
             sor=document.createElement('div')
             sor.className="row"
-
+            sor.classList.add("my-2")
             oszlopok.forEach(
                 function(mezoNev){
                     oszlop=document.createElement('div')
                     oszlop.className="col"
-                    oszlop.innerHTML=allat[mezoNev]
+                    oszlop.innerHTML=`<input class="${allat.id}${mezoNev}" type="text" value="${allat[mezoNev]}" class="form-control">`
                     sor.appendChild(oszlop)  
-                }
-            )
-
-                    
+                })
+                oszlop=document.createElement('div')
+                oszlop.className="col"
+                let a =4
+                oszlop.innerHTML=
+                `
+                <button type="button" onclick="szerkeszt(${allat.id})" class="btn btn-warning">Szerkeszt</button>    
+                <button type="button" onclick="torol(${allat.id})" aerteke="${a}" class="btn btn-danger">Töröl</button>
+                `
+                sor.appendChild(oszlop) 
 
             $('.container').appendChild(sor)
-        }
+        })
+} // adatmegjelenítő vége
 
+function szerkeszt(id){
+    allat=adatok.find(
+        (sor)=>{return sor.id==id}
     )
 
     
+    // allat.nev=document.getElementsByClassName(`${allat.id}nev`)[0].value    
+    // allat.faj=document.getElementsByClassName(`${allat.id}faj`)[0].value
+    // allat.ar=document.getElementsByClassName(`${allat.id}ar`)[0].value
+    // allat.szin=document.getElementsByClassName(`${allat.id}szin`)[0].value
+    
+    // $ ?????
 
+    for(let mezo of oszlopok){
+        allat[mezo]=document.getElementsByClassName(`${allat.id}${mezo}`)[0].value 
+    }
+    console.log(adatok)
+    rendel()
 }
 
+function torol(allat){
+    console.log("Törlendő: ", allat)
+    //splice, slice
+
+    adatok=adatok.filter(
+        (sor) => { return sor.id != allat}
+    )
+    rendel()
+}
 rendel()
