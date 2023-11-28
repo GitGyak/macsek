@@ -1,4 +1,4 @@
-console.log("helló")
+// console.log("helló")
 // CRUD 
 var adatok =[
     {id:1,nev:"Micike", faj:"macska", ar:"1000", szin:"cirmos"},
@@ -14,7 +14,8 @@ function $(mit){
 }
 
 function rendel(){
-    $('.container').innerHTML=""
+    console.log(adatok)
+    $('#adatok').innerHTML=""
     felecMegjelnit()
     ujFelvetele()
     adatMegjelenites() 
@@ -35,7 +36,7 @@ function ujFelvetele(){
         oszlop.className="col"       
         oszlop.innerHTML=`<button type="button" onclick="hozzaad()" class="btn btn-primary">Hozzáadás</button>`
         sor.appendChild(oszlop)
-        $('.container').appendChild(sor)
+        $('#adatok').appendChild(sor)
 }
 
 
@@ -58,7 +59,7 @@ function felecMegjelnit(){
     fejlec.className="col"
     fejlec.innerHTML="Műveletek"
     sor.appendChild(fejlec)
-    $('.container').appendChild(sor)
+    $('#adatok').appendChild(sor)
 }
 
 
@@ -85,7 +86,7 @@ function adatMegjelenites(){
                 `
                 sor.appendChild(oszlop) 
 
-            $('.container').appendChild(sor)
+            $('#adatok').appendChild(sor)
         })
 } // adatmegjelenítő vége
 
