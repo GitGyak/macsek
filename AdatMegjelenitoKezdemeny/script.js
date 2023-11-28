@@ -1,11 +1,18 @@
 // console.log("helló")
 // CRUD 
+var alapAdatok =[
+    {id:1,nev:"Micike", faj:"macska", ar:"1000", szin:"cirmos"},
+    {id:2,nev:"Lune", faj:"macska", ar:"500", szin:"cirmos"},
+    {id:3,nev:"Macsa", faj:"macska", ar:"2000", szin:"cirmos"}
+]
 var adatok =[
     {id:1,nev:"Micike", faj:"macska", ar:"1000", szin:"cirmos"},
     {id:2,nev:"Lune", faj:"macska", ar:"500", szin:"cirmos"},
     {id:3,nev:"Macsa", faj:"macska", ar:"2000", szin:"cirmos"}
 ]
 const oszlopok=["nev", "faj", "ar","szin"]
+var keresoSzo
+
 
 function $(mit){
     vissza=document.querySelectorAll(mit)
@@ -15,10 +22,31 @@ function $(mit){
 
 function rendel(){
     console.log(adatok)
+    beallit()
     $('#adatok').innerHTML=""
     felecMegjelnit()
     ujFelvetele()
-    adatMegjelenites() 
+    // megjelenitendo=adatok
+    megjelenitendo=kereses(adatok)
+    adatMegjelenites(megjelenitendo) 
+}
+
+function kereses(tomb){
+    console.log("KeresoSzo", keresoSzo)
+    if (!keresoSzo) return tomb
+    return tomb.filter(
+        (e)=>{return e.nev.includes(keresoSzo)}
+    )
+}
+
+function beallit(){
+    $('#search').addEventListener('keyup',
+    function(){
+        // console.log(this.value)
+        keresoSzo=this.value
+        rendel()
+    }
+    )
 }
 
 function ujFelvetele(){
@@ -63,8 +91,8 @@ function felecMegjelnit(){
 }
 
 
-function adatMegjelenites(){
-    adatok.forEach(
+function adatMegjelenites(megjelenitendo){
+    megjelenitendo.forEach(
         function(allat){
             sor=document.createElement('div')
             sor.className="row"
